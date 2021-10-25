@@ -1,26 +1,36 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <CustomTable :headData="headData" :headProperties="headProperties"/>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import { reactive } from '@vue/reactivity'
+import CustomTable from './components/customTable.vue'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    CustomTable
+  },
+  setup() {
+    const tableData = reactive(
+      { id: "0", name: "Fedor", surname: "Fedorenko", date: "12.07.l993" },
+      { id: "1", name: "Nikita", surname: "Kolesnechenko", date: "11.01.1967" },
+      { id: "2", name: "Alexey", surname: "Stremanski", date: "09.06.1994" }
+    );
+    const headData = reactive (
+      Object.keys(tableData)
+    );
+    const headProperties = {
+      '--bg-color': '#1ea30c',
+      '--font-color': "#000000",
+    };
+    return {
+      tableData,
+      headData,
+      headProperties,
+    }
   }
 }
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
+<style></style>
