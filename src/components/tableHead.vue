@@ -1,26 +1,47 @@
 <template>
-  <tr class="head var" :style="headProperties">
-    <th class="head-cell" v-for="item of headData" :key="item">{{ item.charAt(0).toUpperCase() + item.slice(1) }}</th>
+  <tr class="head" :style="headProperties">
+    <th class="head-cell" v-for="item of headData" :key="item">
+      {{ firstLetterToUpperCase(item) }}
+    </th>
   </tr>
 </template>
 
 <script>
+import { computed } from "@vue/reactivity";
+import { firstLetterToUpperCase } from "../../utils/index";
 export default {
-  name: 'tableHead',
+  name: "tableHead",
   props: {
-    headData: Array,
-     headProperties: Object
+    tableData: Object,
+    headProperties: Object,
   },
-}
+  setup(props) {
+    const headData = computed(() => {
+      return Object.keys(props.tableData[0]);
+    });
+    return {
+      firstLetterToUpperCase,
+      headData,
+    };
+  },
+};
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+.head {
+  &-cell {
+    padding: 10px 20px;
+    background: var(--bg-color);
+    color: var(--font-color);
+    border-right: 2px solid var(--border-color);
+    font-size: 15px;
 
-.head-cell {
-  padding: 10px 20px;
-  background: var(--bg-color);
-  color: var(--font-color);
-  border-right: 1.5px solid;
-  font-size: 15px;
+    &:last-child {
+      border-right: none;
+    }
+  }
+}
+th:first-child {
+  text-align: left;
 }
 </style>
